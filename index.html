@@ -1,11 +1,197 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkayim</title>
-    <link rel="stylesheet" href="miprwx.css">
+    <title>İyi Ki Doğdun Berkayim!</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS BÖLÜMÜ */
+        :root {
+            --primary-color: #ff477e;
+            --secondary-color: #ff85a1;
+            --bg-color: #fce4ec;
+            --text-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Cam Efekti Kartları */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        /* Hero ve Başlıklar */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .countdown-container {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #fff;
+            background: rgba(0,0,0,0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* Galeri Tasarımı */
+        .gallery-section {
+            padding: 5rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .photo-card:hover {
+            transform: rotate(3deg) scale(1.05);
+        }
+
+        /* Animasyonlar */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Buton Stili */
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #e33e6f;
+        }
+
+        /* Modal / Sürpriz Popup */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .hidden { display: none; }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            position: relative;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background: #fff;
+        }
+
+        .btn-mini {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background: var(--secondary-color);
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .typewriter {
+            font-size: 1.2rem;
+            min-height: 3rem;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,10 +201,9 @@ l<!DOCTYPE html>
         <header class="hero">
             <div class="glass-card fade-in">
                 <h1 class="main-title">İyi Ki Doğdun, <span id="friend-name">Berkayim!</span></h1>
-                <p class="subtitle">İyiki varsin iyiki tanismisiz bu sanaldaki zorluklari beraber aşacaz.</p>
+                <p class="subtitle">İyi ki varsın, iyi ki tanışmışız. Bu sanaldaki zorlukları beraber aşacağız.</p>
                 <div class="countdown-container">
-                    <div id="countdown">
-                        </div>
+                    <div id="countdown">Yükleniyor...</div>
                 </div>
             </div>
         </header>
@@ -26,10 +211,10 @@ l<!DOCTYPE html>
         <section class="gallery-section">
             <h2 class="section-title">En Güzel Anılarımız</h2>
             <div class="gallery-grid">
-                <div <p>Jean ve Flexe attigimiz flood</p></div>
-                <div <p>Telegramda yanlisikla yedigim galeri rat</p></div>
-                <div <p>Beratla 801 le vs</p></div>
-                <div><p>911 ile gecirdigimiz donemler</p></div>
+                <div class="photo-card"><p>Jean ve Flexe attığımız flood</p></div>
+                <div class="photo-card"><p>Telegramda yanlışlıkla yediğim galeri rat</p></div>
+                <div class="photo-card"><p>Beratla 801 le vs</p></div>
+                <div class="photo-card"><p>911 ile geçirdiğimiz dönemler</p></div>
             </div>
         </section>
 
@@ -37,7 +222,7 @@ l<!DOCTYPE html>
             <div class="glass-card">
                 <h2>Sana Bir Notum Var</h2>
                 <div id="typewriter-text" class="typewriter"></div>
-                <button id="surprise-btn" class="btn"> Sen dunyanin en guzel dostusun</button>
+                <button id="surprise-btn" class="btn">Tıkla Bakalım Dostum!</button>
             </div>
         </section>
 
@@ -54,11 +239,138 @@ l<!DOCTYPE html>
             <span class="close-btn">&times;</span>
             <h2>Sürpriz! 🎉</h2>
             <p>Sen dünyadaki en iyi arkadaşlardan birisin. Hayatın boyunca tüm dileklerin gerçek olsun!</p>
-            <div class="balloons-wrapper">
-                </div>
+            <div class="balloons-wrapper" style="font-size: 3rem; margin-top: 15px;">
+                🎈🎈🎈
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        /**********************
+         * CONFETTI
+         **********************/
+        const canvas = document.getElementById("confetti-canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const confettiPieces = [];
+
+        for (let i = 0; i < 150; i++) {
+            confettiPieces.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 6 + 2,
+                d: Math.random() * 2 + 1,
+                color: `hsl(${Math.random() * 360},100%,70%)`
+            });
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettiPieces.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            });
+            updateConfetti();
+        }
+
+        function updateConfetti() {
+            confettiPieces.forEach(p => {
+                p.y += p.d;
+                if (p.y > canvas.height) {
+                    p.y = 0;
+                    p.x = Math.random() * canvas.width;
+                }
+            });
+        }
+
+        setInterval(drawConfetti, 20);
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        /**********************
+         * COUNTDOWN
+         **********************/
+        const birthday = new Date("2026-02-01 00:00:00").getTime();
+        const countdownEl = document.getElementById("countdown");
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = birthday - now;
+
+            if (diff < 0) {
+                countdownEl.innerHTML = "🎂 Doğum Günün Kutlu Olsun!";
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diff / (1000 * 60)) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+
+            countdownEl.innerHTML = `
+                <strong>${d}</strong> gün 
+                <strong>${h}</strong> saat 
+                <strong>${m}</strong> dk 
+                <strong>${s}</strong> sn
+            `;
+        }, 1000);
+
+        /**********************
+         * TYPEWRITER
+         **********************/
+        const text = "Berkayim, iyi ki varsın. Nice zorlukları beraber aştık, daha nicelerini de aşacağız. Dostluğun her şeye değer 🤍";
+        const typeEl = document.getElementById("typewriter-text");
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                typeEl.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        window.onload = typeWriter;
+
+        /**********************
+         * MODAL
+         **********************/
+        const modal = document.getElementById("modal");
+        const btn = document.getElementById("surprise-btn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        btn.onclick = () => modal.classList.remove("hidden");
+        closeBtn.onclick = () => modal.classList.add("hidden");
+
+        window.onclick = e => {
+            if (e.target === modal) modal.classList.add("hidden");
+        };
+
+        /**********************
+         * MUSIC
+         **********************/
+        const music = new Audio("music.mp3"); // music.mp3 dosyasının HTML ile aynı klasörde olması gerekir
+        music.loop = true;
+
+        const playBtn = document.getElementById("play-music");
+        let playing = false;
+
+        playBtn.addEventListener("click", () => {
+            if (!playing) {
+                music.play().catch(e => alert("Müzik dosyası (music.mp3) bulunamadı!"));
+                playing = true;
+            } else {
+                music.pause();
+                playing = false;
+            }
+        });
+    </script>
 </body>
-  </html>
+</html>
