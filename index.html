@@ -203,7 +203,6 @@
                 <h1 class="main-title">İyi Ki Doğdun, <span id="friend-name">Berkayim!</span></h1>
                 <p class="subtitle">İyi ki varsın, iyi ki tanışmışız. Bu sanaldaki zorlukları beraber aşacağız.</p>
                 <div class="countdown-container">
-                    <div id="countdown">Yükleniyor...</div>
                 </div>
             </div>
         </header>
@@ -294,35 +293,7 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
-
-        /**********************
-         * COUNTDOWN
-         **********************/
-        const birthday = new Date("2026-02-01 00:00:00").getTime();
-        const countdownEl = document.getElementById("countdown");
-
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = birthday - now;
-
-            if (diff < 0) {
-                countdownEl.innerHTML = "🎂 Doğum Günün Kutlu Olsun!";
-                return;
-            }
-
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const m = Math.floor((diff / (1000 * 60)) % 60);
-            const s = Math.floor((diff / 1000) % 60);
-
-            countdownEl.innerHTML = `
-                <strong>${d}</strong> gün 
-                <strong>${h}</strong> saat 
-                <strong>${m}</strong> dk 
-                <strong>${s}</strong> sn
-            `;
-        }, 1000);
-
+        
         /**********************
          * TYPEWRITER
          **********************/
